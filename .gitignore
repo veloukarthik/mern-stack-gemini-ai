@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#views
+views/node_modules/
+views/.gitignore
+views/README.md
