@@ -1,5 +1,5 @@
 
-const API = 'http://localhost:3000/api/';
+const API = '/api/';
 
 export const getPrompts = async () => {
     const token = localStorage.getItem('token');
