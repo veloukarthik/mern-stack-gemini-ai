@@ -5,9 +5,14 @@ const router = require('./routes/api');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const helment = require('helmet');
 const app = express();
 app.use(express.json());
 
+// Enable security features xss protection
+app.use(helmet());
+
+// Enable cors middleware
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('Connected to MongoDB '+ process.env.MONGO_URI);
