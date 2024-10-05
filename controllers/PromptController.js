@@ -22,17 +22,24 @@ const getToken = (req) => {
 const prompt = async (req, res) => {
 
     try {
-        if (!req.body.prompt) {
-            return res.status(400).json({ error: 'Prompt is required' });
-        }
+       
         const prompt = req.body.prompt; // Assuming the prompt is sent in the request body
         const userId = getToken(req);
+        const promptsId = req.body.promptId;
         let subprompt = '';
 
         if (req.body.subprompt) {
             subprompt = req.body.subprompt;
         }
-        const checkPrompt = await promptModel.findOne({ prompt: prompt, user_id: userId });
+
+        let checkPrompt = '';
+
+        if(promptsId){
+            checkPrompt = await promptModel.findOne({ _id: promptsId, user_id: userId });
+        }
+        else{
+            checkPrompt = await promptModel.findOne({ prompt: prompt, user_id: userId });
+        }
 
         let promptId = '';
 
@@ -71,7 +78,7 @@ const prompt = async (req, res) => {
              promptResponse = await promptResponseModel.create({
                 prompt_id: promptId,
                 user_id: userId,
-                subprompt: subprompt,
+                subprompt: subprompt ? subprompt : prompt,
                 response: result.response.text()
             });
         }
@@ -81,7 +88,7 @@ const prompt = async (req, res) => {
         }
 
 
-        return res.status(200).json({ response: promptResponse });
+        return res.status(200).json({ promptResponse });
     }
     catch (error) {
         console.log(error);
