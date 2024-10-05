@@ -24,7 +24,6 @@ function PromptsResponse() {
     const getResponse = async () => {
         if (id) {
             const data = await getPromtResponse(id);
-            console.log(data, "data");
             getItems();
             setResponse(data.promptResponse);
             // Scroll to the bottom of the page after the response is set
@@ -41,10 +40,14 @@ function PromptsResponse() {
     }
 
     const getItems = () => {
-        getPrompts().then((data) => {
-            console.log(data, "data");
-            setPrompts(data.prompts);
-        });
+          getPrompts().then((data) => {
+              if(data && data.prompts)
+              {
+                let results =  data.prompts.filter((val) => val._id == id ? val : null);
+                document.title = results.length > 0 ? results[0].prompt : 'Gemini AI';
+              }
+              setPrompts(data.prompts);
+          });
     }
 
 
@@ -74,7 +77,6 @@ function PromptsResponse() {
                 {
                     setButton('Send');
                     setInput('');
-                    console.log(data.promptResponse.prompt_id, "data");
                     navigate("/p/" + data.promptResponse.prompt_id);
                 }
                 

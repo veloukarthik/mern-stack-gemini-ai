@@ -99,7 +99,7 @@ const prompt = async (req, res) => {
 const getPrompt = async (req, res) => {
     try {
         const userId = getToken(req);
-        const prompts = await promptModel.find({ user_id: userId });
+        const prompts = await promptModel.find({ user_id: userId }).sort({ createdAt: -1 });
         return res.status(200).json({ prompts });
     }
     catch (error) {

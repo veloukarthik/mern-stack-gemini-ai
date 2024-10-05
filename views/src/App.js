@@ -5,6 +5,8 @@ import Register from './Components/Register';
 import PromptResponse from './Components/PromptResponse';
 import './App.css'
 import PromptsResponse from './Components/PromptResponse';
+import NotFound from './Components/NotFound';
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -18,6 +20,10 @@ function App() {
       {
         path: "/register",
         Component: Register
+      },
+      {
+        path: "/*",
+        component: NotFound
       }
     ]);
   }
@@ -30,6 +36,10 @@ function App() {
       {
         path: "/p/:id",
         Component: PromptResponse
+      },
+      {
+        path: "/*",
+        Component: NotFound
       }
     ]);
   }
