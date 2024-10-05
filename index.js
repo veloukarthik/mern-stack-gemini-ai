@@ -4,19 +4,31 @@ require('dotenv').config();
 const router = require('./routes/api');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 app.use(express.json());
 
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI).then(() => {
-  console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB '+ process.env.MONGO_URI);
 }).catch((err) => {
   console.log('Error connecting to MongoDB', err);
 });
 
+// Serve static files from 'views/build' directory
+app.use(express.static(path.join(__dirname, 'views', 'build')));
 
-
+// Route to serve the index.html file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'build', 'index.html'));
+});
 app.use('/api', router);
+// Catch-all route to serve index.html for client-side routing (if necessary)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'build', 'index.html'));
+});
+
+
 
 
 app.listen(3000, () => {

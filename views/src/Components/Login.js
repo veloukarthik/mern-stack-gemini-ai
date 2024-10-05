@@ -16,6 +16,7 @@ function Login() {
         console.log(response);
         if(response.status === true) {
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user', response.data.name)
             window.location.href = '/';
         }
     }

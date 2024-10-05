@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getPrompts, getPromtResponse } from '../Services/Index';
 import { Link } from 'react-router-dom';
 
-function Prompts() {
+function Prompts({changes}) {
 
     const [prompts, setPrompts] = useState([]);
     const [input, setInput] = useState('');
@@ -16,8 +16,9 @@ function Prompts() {
     }
 
     useEffect(() => {
+        console.log(changes, "changes");
         getItems();
-    }, []);
+    }, [changes]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ function Prompts() {
     return (
         <div className="h-screen flex">
             <div className="w-64 bg-gray-800 text-white flex flex-col">
-                <div className="p-4 font-bold text-xl border-b border-gray-700">ChatGPT</div>
+                <div className="p-4 font-bold text-xl border-b border-gray-700">Gemini AI</div>
                 <div className="w-64 bg-gray-800 text-white flex flex-col">
                     <Link to="/" className="p-4 font-bold text-xl border-b border-gray-700">New</Link>
                 </div>

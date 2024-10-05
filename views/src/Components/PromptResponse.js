@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getPrompts, getPromtResponse, createPrompt } from '../Services/Index';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import Prompts from './Prompts';
+import Markdown from 'markdown-to-jsx';
 function PromptsResponse() {
     const [prompts, setPrompts] = useState([]);
     const [input, setInput] = useState('');
@@ -10,19 +11,29 @@ function PromptsResponse() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+    const [button,setButton] = useState('Send')
+   
+    const name =  localStorage.getItem('user');
     useEffect(() => {
         setInput('');
         getItems();
         getResponse();
+        
     }, [location]);
-
 
     const getResponse = async () => {
         if (id) {
             const data = await getPromtResponse(id);
             console.log(data, "data");
+            getItems();
             setResponse(data.promptResponse);
+            // Scroll to the bottom of the page after the response is set
+            setTimeout(() => {
+                window.scrollTo({
+                  top: document.body.scrollHeight, // Scroll to the bottom
+                  behavior: 'smooth',              // Smooth scrolling effect
+                });
+              }, 100); 
         }
         else {
             setResponse([]);
@@ -49,15 +60,24 @@ function PromptsResponse() {
             data.prompt = input;
             data.subprompt = '';
         }
+        setButton('Sending...');
+        setInput('');
         createPrompt(data).then((data) => {
             setInput('');
             if (id) {
                 getResponse();
+                setButton('Send');
                 setInput('');
             }
             else {
-                console.log(data.promptResponse.prompt_id, "data");
-                navigate("/p/" + data.promptResponse.prompt_id);
+                if(data)
+                {
+                    setButton('Send');
+                    setInput('');
+                    console.log(data.promptResponse.prompt_id, "data");
+                    navigate("/p/" + data.promptResponse.prompt_id);
+                }
+                
                 //  Navigate("/p/" + data.promptResponse.prompt_id);
             }
 
@@ -66,28 +86,28 @@ function PromptsResponse() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        window.location.reload();
+        window.location.href = "/";
     }
 
     return (
         <div className="h-screen flex">
-            <Prompts />
+            <Prompts changes={response} />
 
             <div className="flex-1 flex flex-col">
                 <header className="bg-white shadow p-4">
                     <h1 className="text-2xl font-semibold flex justify-between items-center">
-                        <span>ChatGPT UI</span>
+                        <span>Gemini AI</span>
                         <div className="relative inline-block text-right">
                             <div>
                                 <button
                                     type="button"
-                                    className="inline-flex justify-center rounded-full py-2 border border-gray-300 shadow-sm w-10 h-10 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                    className="inline-flex uppercase justify-center rounded-full py-2 border border-gray-300 shadow-sm w-10 h-10 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                                     id="options-menu"
                                     aria-haspopup="true"
                                     aria-expanded="true"
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 >
-                                  K
+                                   {name ? name.charAt(0) : ''}
                                 </button>
                             </div>
                             {isMenuOpen && (
@@ -100,9 +120,6 @@ function PromptsResponse() {
                             )}
                         </div>
                     </h1>
-
-
-
                 </header>
 
                 <main className="flex-1 overflow-y-auto p-4">
@@ -116,8 +133,8 @@ function PromptsResponse() {
                                     </div>
                                 </div>
                                 <div className="flex justify-end w-full mt-3 mt-3">
-                                    <div className="bg-blue-500 text-white p-3 rounded-lg w-full">
-                                        <p>{response.response}</p>
+                                    <div className="bg-gray-200 p-3 rounded-lg w-full text-conent">
+                                        <Markdown>{response.response}</Markdown>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +147,9 @@ function PromptsResponse() {
                 <footer className="p-4 bg-white border-t">
                     <div className="flex items-center">
                         <input onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder="Type your message..." className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        <button onClick={() => handleSubmit()} disabled={input ? false : true} className="ml-2 p-2 bg-blue-500 text-white rounded-lg">Send</button>
+                        <button onClick={() => handleSubmit()} disabled={input ? false : true} className="ml-2 p-2 bg-blue-500 text-white rounded-lg">
+                            {button}
+                        </button>
                     </div>
                 </footer>
             </div>

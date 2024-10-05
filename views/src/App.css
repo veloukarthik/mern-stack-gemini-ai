@@ -2,3 +2,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* App.css */
+.response-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: flex-start; /* Aligns text to the top */
+    padding: 20px;
+  }
+  
+  .text-content {
+    max-width: 800px; /* Set a max width for readability */
+    text-align: justify; /* Justify the text */
+    font-size: 16px; /* Adjust the font size as necessary */
+    line-height: 1.6; /* Better line spacing for readability */
+  }
+  
+ p {
+    text-align: justify; /* Justify the text */
+    font-size: 16px; /* Adjust the font size as necessary */
+    line-height: 1.6; /* Better line spacing for readability */
+    margin-bottom: 10px; /* Space between paragraphs */
+  }
+ul{
+    margin-bottom: 10px;
+}
+  
