@@ -5,7 +5,7 @@ const router = require('./routes/api');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const helment = require('helmet');
+const helmet = require('helmet');
 const app = express();
 app.use(express.json());
 
