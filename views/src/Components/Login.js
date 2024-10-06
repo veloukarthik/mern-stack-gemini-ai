@@ -42,7 +42,7 @@ function Login() {
 
     return (
         <div className="flex min-h-screen">
-            <div className="flex-1 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?ixid=2yJhcHBfaWQiOjEyMDd9&fm=jpg&fit=crop&w=1080&q=80&fit=max')"}}>
+            <div className="flex-1 bg-cover bg-center" style={{backgroundImage: "url('./background.jpeg')"}}>
                 {/* You can add any content for the left side if needed */}
             </div>
             <div className="flex-1 flex items-center justify-center bg-gray-100">
