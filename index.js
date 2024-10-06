@@ -15,7 +15,7 @@ app.use(helmet());
 // Enable cors middleware
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI).then(() => {
-  console.log('Connected to MongoDB '+ process.env.MONGO_URI);
+  // console.log('Connected to MongoDB ');
 }).catch((err) => {
   console.log('Error connecting to MongoDB', err);
 });
@@ -37,7 +37,7 @@ app.get('*', (req, res) => {
 
 
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+  // console.log('Server is running on port 3000');
 });
 
 // async function generateText(prompt) {
