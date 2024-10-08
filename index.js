@@ -6,11 +6,29 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
+const cron = require('node-cron');
 const app = express();
 app.use(express.json());
 
 // Enable security features xss protection
 app.use(helmet());
+
+cron.schedule('* * * * *', () => {
+  // console.log('Task is running every minute');
+  // You can add your task logic here, like calling a function or database operation
+});
+
+setTimeout(() => {
+  // console.log('Task is running 5 seconds');
+  // You can add your task logic here, like calling a function or database operation
+}, 5000);
+
+setInterval(() => {
+  // console.log('Task is running every 1 seconds');
+  // You can add your task logic here, like calling a function or database operation
+}, 1000);
+
+// console.log("Task is running without delay");
 
 // Enable cors middleware
 app.use(cors());
