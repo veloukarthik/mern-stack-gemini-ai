@@ -57,3 +57,13 @@ export const getPromtResponse = async (id) => {
     const data = await response.json();
     return data;
 }
+
+export const fetchUserData = async (token) => {
+    const response = await fetch(`${API}myaccount`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
