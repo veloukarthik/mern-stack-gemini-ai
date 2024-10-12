@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { login, register, myaccount } = require('../controllers/UserController');
+const { login, register, myaccount, fileUpload } = require('../controllers/UserController');
 const { prompt, getPrompt, getPromptResponse } = require('../controllers/PromptController');
 const authMiddleware = require('../middleware/AuthMiddleware');
 
@@ -11,7 +11,9 @@ router.post('/login', login);
 
 router.post('/register', register);
 
-router.post('/myaccount', myaccount);
+router.post('/myaccount',authMiddleware, myaccount);
+
+router.post('/upload', authMiddleware,fileUpload);
 
 router.get('/prompt',authMiddleware, getPrompt);
 

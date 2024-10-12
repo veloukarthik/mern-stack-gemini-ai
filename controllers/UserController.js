@@ -102,8 +102,38 @@ const myaccount = async (req, res) => {
 
 }
 
+const fileUpload = (req, res) => {
+    try {
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No files were uploaded.');
+        }
+  
+        // Access the uploaded file using req.files.<input_name>
+        let uploadedFile = req.files.file;  // The "file" is the name attribute in the HTML form
+  
+       // Check if the file is an image
+       if(!uploadedFile.mimetype.startsWith('image/')) {
+        return res.status(400).json({'message':'Only image files are allowed.'});
+       }
+  
+        // Move the file to a target directory (./uploads folder)
+        uploadedFile.mv('./uploads/' + uploadedFile.name, (err) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+  
+            // Return a response after a successful file upload
+            res.send('File uploaded successfully');
+        });
+  
+    } catch (err) {
+        res.status(500).send({err});
+    }
+  };
+
 module.exports = {
     login,
     register,
-    myaccount
+    myaccount,
+    fileUpload
 }

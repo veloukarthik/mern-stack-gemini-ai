@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const cron = require('node-cron');
 const app = express();
 app.use(express.json());
-
+const fileUpload = require('express-fileupload');
 // Enable security features xss protection
 app.use(helmet());
 
@@ -38,6 +38,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('Error connecting to MongoDB', err);
 });
 
+app.use(express.urlencoded({ extended: true }));
 // Serve static files from 'views/build' directory
 app.use(express.static(path.join(__dirname, 'views', 'build')));
 
@@ -45,6 +46,18 @@ app.use(express.static(path.join(__dirname, 'views', 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'build', 'index.html'));
 });
+
+// Enable files upload
+app.use(fileUpload({
+  createParentPath: true  // Automatically create parent directories for uploaded files
+}));
+
+// Serve static files (optional)
+app.use(express.static('uploads'));
+
+// Upload route
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/api', router);
 // Catch-all route to serve index.html for client-side routing (if necessary)
 app.get('*', (req, res) => {
