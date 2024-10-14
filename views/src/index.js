@@ -1,9 +1,11 @@
-import React, { useContext,createContext } from 'react';
+import React, { useContext, createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './Context/userContext';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+
 
 const Context = createContext();
 
@@ -11,7 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </UserProvider>
   </React.StrictMode>
 );
