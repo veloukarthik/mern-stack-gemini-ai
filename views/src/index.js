@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './Context/userContext';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import ErrorBoundary from './Errorboundary';
+
 
 
 const Context = createContext();
