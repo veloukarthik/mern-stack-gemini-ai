@@ -1,11 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Prompts from './Components/Prompts';
-import Login from './Components/Login';
-import Register from './Components/Register';
-import PromptResponse from './Components/PromptResponse';
+import React from 'react';
+// import Login from './Components/Login';
+// import Register from './Components/Register';
+// import NotFound from './Components/NotFound';
+// import PromptsResponse from './Components/PromptResponse';
+// import PromptResponse from './Components/PromptResponse';
 import './App.css'
-import PromptsResponse from './Components/PromptResponse';
-import NotFound from './Components/NotFound';
+const PromptResponse = React.lazy(() => import('./Components/PromptResponse'));
+const Register = React.lazy(() => import('./Components/Register'));
+const Login = React.lazy(() => import('./Components/Login'));
+const NotFound = React.lazy(() => import('./Components/NotFound'));
+const PromptsResponse = React.lazy(() => import('./Components/PromptResponse'),5000);
+
 
 
 function App() {

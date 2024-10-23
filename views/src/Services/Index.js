@@ -1,5 +1,11 @@
 
-const API = '/api/';
+let API;
+if (window.location.hostname == 'localhost') {
+    API = 'http://localhost:3000/api/';
+}
+else {
+    API = '/api/';
+}
 
 export const getPrompts = async () => {
     const token = localStorage.getItem('token');

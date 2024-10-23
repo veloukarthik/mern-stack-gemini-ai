@@ -1,0 +1,52 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Client</title>
+  <script>
+    let socket;
+
+    // Connect to the WebSocket server
+    function connect() {
+      socket = new WebSocket('ws://localhost:8080');
+
+      // Connection opened
+      socket.addEventListener('open', () => {
+        console.log('Connected to WebSocket server');
+        document.getElementById('status').innerText = 'Connected';
+      });
+
+      // Listen for messages
+      socket.addEventListener('message', (event) => {
+        const messageBox = document.getElementById('messages');
+        messageBox.innerHTML += `<p>${event.data}</p>`;
+      });
+
+      // Handle WebSocket close
+      socket.addEventListener('close', () => {
+        console.log('Disconnected from WebSocket server');
+        document.getElementById('status').innerText = 'Disconnected';
+      });
+    }
+
+    // Send a message to the WebSocket server
+    function sendMessage() {
+        console.log('Sending message:', message);
+      const message = document.getElementById('inputMessage').value;
+      socket.send(message);
+    }
+  </script>
+</head>
+<body onload="connect()">
+  <h1>WebSocket Client</h1>
+  <p>Status: <span id="status">Connecting...</span></p>
+
+  <input type="text" id="inputMessage" placeholder="Enter message" />
+  <button onclick="sendMessage()">Send Message</button>
+
+  <h2>Messages:</h2>
+  <div id="messages"></div>
+</body>
+</html>
