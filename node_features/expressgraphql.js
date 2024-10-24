@@ -9,7 +9,7 @@ const schema = buildSchema(`
     getAllUsers: [User]
     getUser(id: Int!): User
   }
-  
+
   type Mutation {
     createUser(name: String!, email: String!): User,
     updateUser(id: Int!, name: String!, email: String!): User,
@@ -77,6 +77,16 @@ const root = {
 
 // Step 3: Set up the Express server with the GraphQL middleware
 const app = express();
+
+function authenticate(req, res, next) {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  next();
+}
+
+app.use(authenticate);
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
