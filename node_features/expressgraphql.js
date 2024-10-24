@@ -9,7 +9,7 @@ const schema = buildSchema(`
     getAllUsers: [User]
     getUser(id: Int!): User
   }
-
+  
   type Mutation {
     createUser(name: String!, email: String!): User,
     updateUser(id: Int!, name: String!, email: String!): User,
@@ -33,14 +33,16 @@ const root = {
   hello: () => {
     return 'Hello, world!';
   },
+
+  // Resolver for the "getAllUsers" field
   getAllUsers: () => {
     return users;
   },
-
+  // Resolver for the "getUser" field
   getUser: ({ id }) => {
     return users.find(user => user.id === id);
   },
-
+  // Resolver for the "createUser" field
   createUser: ({ name, email }) => {
     const newUser = { id: users.length + 1, name, email };
     const check = users.find(user => user.email === email);
@@ -50,7 +52,7 @@ const root = {
     users.push(newUser);
     return newUser;
   },
-
+  // Resolver for the "updateUser" field
   updateUser: ({ id, name, email }) => {
     const user = users.find(user => user.id === id);
     if (!user) {
@@ -60,7 +62,7 @@ const root = {
     user.email = email;
     return user;
   },
-
+  // Resolver for the "deleteUser" field
   deleteUser: ({ id }) => {
     const index = users.findIndex(user => user.id === id);
     if (index === -1) {
