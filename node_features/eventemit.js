@@ -6,4 +6,7 @@ emitter.on('userLoggedIn', (username) => {
   console.log(`User ${username} logged in.`);
 });
 
-emitter.emit('userLoggedIn', 'John Doe');
+console.log("loading");
+setTimeout(()=>{
+  emitter.emit('userLoggedIn', 'John Doe');
+},1000)
