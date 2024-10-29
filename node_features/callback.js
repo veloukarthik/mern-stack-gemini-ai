@@ -24,7 +24,18 @@ function fetchUser(userId, callback) {
     fetchOrders(user.userId, (orders) => {
       fetchOrderDetails(orders[0].orderId, (orderDetails) => {
         console.log(`Order details:`, orderDetails);
+        process.exit(1);
       });
     });
   });
-  
+  // 
+// cleanupExit.js
+process.on('exit', (code) => {
+  console.log(`Process exiting with code: ${code}`);
+  // Perform cleanup tasks here (e.g., closing DB connections)
+});
+
+console.log('Starting some task...');
+
+// Simulate task completion and exit with code 0
+

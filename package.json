@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@google/generative-ai": "^0.17.1",
+    "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",
     "body-parse": "^0.1.0",
     "buffer": "^6.0.3",
