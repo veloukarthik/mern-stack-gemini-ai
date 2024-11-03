@@ -60,3 +60,16 @@ for (let i = 1; i <= 10; i++) {
     }
     console.log(row);
 }
+
+
+function numstar(nums)
+{
+    
+let starsArray = nums.map(num => '*'.repeat(num));
+
+// Print each line of stars
+starsArray.forEach(stars => console.log(stars));
+}
+
+let nums =[10,20,10,7,8]
+numstar(nums);
